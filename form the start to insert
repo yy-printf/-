@@ -1,0 +1,46 @@
+
+#include<stdio.h>
+#include<stdlib.h>
+struct Node {
+	int data;
+	struct Node* next;
+};
+void insert(int x, struct Node** pointerhead);
+void print(struct Node*head);
+int main()
+{
+	struct Node* first;
+	first = NULL;
+	printf("how many numbers do you want to insert");
+	int n, x, i;
+	scanf_s("%d", &n);
+	for (i = 0;i < n;i++)
+	{
+		printf("please insert you number/n");
+		scanf_s("%d", &x);
+		insert(x,&first);//first is the first node in the list
+		print(first);
+	}
+
+}
+void insert(int x, struct Node** head)
+{
+	struct Node* temp = (Node*)malloc(sizeof(struct Node*));//实现了从内存中随机找到一部分空间填充，能实现反复进入这个函数时创造分立节点
+	temp->data = x;
+	temp->next = NULL;
+	temp->next=*head;
+	*head = temp;//不管怎么样我们都要执行这一步，因为我们在开头插入节点始终需要这一步
+
+}
+void print(struct Node* head)
+{
+	struct Node* temp = head;
+	while (temp != NULL)
+	{
+		printf("%d\n", temp->data);
+		temp = temp->next;
+	}
+}
+//1:，通过全局变量直接实现各种函数，优点方便从各个函数中直接对首地址进行取
+//2：局部变量，通过返回值来确保首地址的正确性
+//3：2级指针，还是void型函数，直接在函数中进行修改
